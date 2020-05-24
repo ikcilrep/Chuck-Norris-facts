@@ -17,7 +17,6 @@ export default class Joke extends Component {
 
         return (
             <div>
-                <img src={data.icon_url}></img>
                 <h1>
                     {data.value}
                 </h1>
