@@ -9,17 +9,18 @@ class App extends Component {
     super(props);
     this.state = {
       current_category: "any",
-      categories: [],
+      categories: ['any'],
       joke: "",
       joke_loading: true,
     }
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
+    this.updateJoke = this.updateJoke.bind(this);
   }
   render() {
-    const { categories, joke_loading, joke } = this.state;
+    const { current_category, categories, joke_loading, joke } = this.state;
     return (
       <div className="App">
-        <NavBar handleCategoryChange={this.handleCategoryChange} categories={categories} />
+        <NavBar current_category={current_category} updateJoke={this.updateJoke} handleCategoryChange={this.handleCategoryChange} categories={categories} />
         <Joke joke={joke} joke_loading={joke_loading} />
       </div>
     );
@@ -34,7 +35,8 @@ class App extends Component {
 
   async updateCategories() {
     const categoriesResponse = await axios.get("https://api.chucknorris.io/jokes/categories");
-    const categories =  await categoriesResponse.data;
+    const categories = await categoriesResponse.data;
+    categories.push('any');
     if (categories) {
       this.setState(
         { categories: categories }

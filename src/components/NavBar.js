@@ -1,4 +1,4 @@
-import { Toolbar, IconButton, Typography, AppBar } from "@material-ui/core";
+import { Button, Toolbar, IconButton, Typography, AppBar } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 export default function NavBar(props) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const { handleCategoryChange, categories } = props;
+    const { current_category, updateJoke, handleCategoryChange, categories } = props;
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -29,6 +29,13 @@ export default function NavBar(props) {
         setAnchorEl(null);
     };
 
+    const getTitle = () => {
+        if (current_category === 'any') {
+            return "Chuck Norris facts";
+        }
+        return "Chuck Norris facts: " + current_category;
+    };
+
     return (<AppBar position="static">
         <Toolbar>
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleClick}>
@@ -36,8 +43,9 @@ export default function NavBar(props) {
             </IconButton>
             <CategoryMenu categories={categories} handleCategoryChange={handleCategoryChange} handleClick={handleClick} handleClose={handleClose} anchorEl={anchorEl} />
             <Typography variant="h6" className={classes.title}>
-                Chuck Norris jokes
-      </Typography>
+                {getTitle()}
+            </Typography>
+            <Button color="inherit" onClick={updateJoke}>Next joke</Button>
         </Toolbar>
     </AppBar>);
 }
