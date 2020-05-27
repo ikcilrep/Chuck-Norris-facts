@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Joke from './components/Joke'
 import NavBar from './components/NavBar'
+const axios = require('axios');
 
 class App extends Component {
   constructor(props) {
@@ -23,13 +24,13 @@ class App extends Component {
   }
 
   async getCategories() {
-    const categoriesResponse = await fetch("https://api.chucknorris.io/jokes/categories");
-    return await categoriesResponse.json();
+    const categoriesResponse = await axios.get("https://api.chucknorris.io/jokes/categories");
+    return await categoriesResponse.data;
   }
 
-  async getJoke() {
-    const jokeResponse = await fetch("https://api.chucknorris.io/jokes/random");
-    return (await jokeResponse.json()).value;
+  async getJoke(category) {
+    const jokeResponse = await axios.get("https://api.chucknorris.io/jokes/random");
+    return await jokeResponse.data.value;
   }
 
   async componentDidMount() {
