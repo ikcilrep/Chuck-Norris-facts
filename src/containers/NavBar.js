@@ -1,10 +1,10 @@
-import { Toolbar, IconButton, Typography, AppBar, InputBase, Button } from "@material-ui/core";
+import { Toolbar, IconButton, Typography, AppBar, Button } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import MoreIcon from "@material-ui/icons/More";
-import SearchIcon from "@material-ui/icons/Search";
 import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import CategoryMenu from "./CategoryMenu";
+import CategoryMenu from "../components/CategoryMenu";
+import SearchField from "../components/SearchField";
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -141,19 +141,7 @@ export default function NavBar(props) {
                     <Typography className={classes.title} variant="h6" noWrap>
                         {getTitle()}
                     </Typography>
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
-                        </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </div>
+                    <SearchField classes={classes} />
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                     </div>

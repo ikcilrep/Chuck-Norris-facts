@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Joke from './components/Joke'
-import NavBar from './components/NavBar'
+import NavBar from './containers/NavBar'
 const axios = require('axios');
 
 class App extends Component {
