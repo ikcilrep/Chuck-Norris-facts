@@ -9,6 +9,7 @@ class App extends Component {
     super(props);
     this.state = {
       current_category: "any",
+      current_search_query: "",
       categories: ['any'],
       joke: "",
       joke_loading: true,
@@ -46,9 +47,11 @@ class App extends Component {
   }
 
   async updateJoke() {
-    const { current_category } = this.state;
+    const { current_search_query, current_category } = this.state;
     let jokeResponse;
-    if (current_category === "any") {
+    if (current_search_query !== "") {
+      jokeResponse = await axios.get("https://api.chucknorris.io/jokes/search", { params: { query: current_search_query } });
+    } else if (current_category === "any") {
       jokeResponse = await axios.get("https://api.chucknorris.io/jokes/random");
     } else {
       jokeResponse = await axios.get('https://api.chucknorris.io/jokes/random', { params: { category: current_category } });

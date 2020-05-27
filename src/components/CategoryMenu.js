@@ -3,16 +3,24 @@ import { Menu, MenuItem } from '@material-ui/core';
 
 export default function CategoryMenu(props) {
 
-    const { handleCategoryChange, handleClose, anchorEl, categories } = props;
+    const {
+        open,
+        id,
+        handleCategoryChange,
+        handleClose,
+        anchorEl,
+        categories } = props;
 
     return (
         <div>
             <Menu
-                id="simple-menu"
+                open={open}
+                id={id}
                 anchorEl={anchorEl}
                 keepMounted
-                open={Boolean(anchorEl)}
                 onClose={handleClose}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             >
                 {
                     categories.map(c => {
