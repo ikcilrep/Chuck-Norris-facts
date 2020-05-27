@@ -30,15 +30,14 @@ class App extends Component {
   handleCategoryChange(newCategory) {
     this.setState({
       currentCategory: newCategory,
-    })
-    this.updateJoke();
+    }, this.updateJoke);
   }
 
   async updateCategories() {
     const categoriesResponse = await axios.get("https://api.chucknorris.io/jokes/categories");
     const categories = await categoriesResponse.data;
-    categories.push('any');
     if (categories) {
+      categories.push('any');
       this.setState(
         { categories: categories }
       );
