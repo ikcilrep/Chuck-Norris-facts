@@ -1,21 +1,10 @@
 import React, { Component } from 'react';
-import { CircularProgress, Menu, MenuItem } from '@material-ui/core';
+import { Menu, MenuItem } from '@material-ui/core';
 
-export default class CategoryMenu extends Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-            categories: [],
-            loading: true
-        }
-    }
-
+export default class CategoryMenu extends Component {
     render() {
-        const { loading, categories } = this.state;
-        if (loading) {
-            return <div><CircularProgress /></div>;
-        }
-
+        console.log(this.props);
+        const { categories } = this.props;
 
         return (
             <div>
@@ -28,23 +17,11 @@ export default class CategoryMenu extends Component{
                 >
                     {
                         categories.map(c =>
-                            <MenuItem onClick={this.props.handleClose}>{c}</MenuItem>)
+                            <MenuItem key={c} onClick={this.props.handleClose}>{c}</MenuItem>)
                     }
                 </Menu>
             </div>
         );
 
     }
-
-    async componentDidMount() {
-        const data = await fetch("https://api.chucknorris.io/jokes/categories");
-        const dataJSON = await data.json();
-
-        if (dataJSON) {
-            this.setState(
-                { categories: dataJSON, loading: false }
-            )
-        }
-    }
-
 }

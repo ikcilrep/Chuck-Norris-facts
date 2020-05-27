@@ -10,15 +10,15 @@ export default class Joke extends Component {
         };
     }
     render() {
-        const { data, loading } = this.state;
-        if (loading) {
+        const { joke, joke_loading } = this.props;
+        if (joke_loading) {
             return <div><CircularProgress /></div>;
         }
 
         return (
             <div>
                 <h1>
-                    {data.value}
+                    {joke}
                 </h1>
             </div>
         );
