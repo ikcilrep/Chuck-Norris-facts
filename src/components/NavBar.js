@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 export default function NavBar(props) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const {categories} = props;
+    const { handleCategoryChange, categories } = props;
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -34,7 +34,7 @@ export default function NavBar(props) {
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleClick}>
                 <MenuIcon />
             </IconButton>
-            <CategoryMenu categories={categories} handleClick={handleClick} handleClose={handleClose} anchorEl={anchorEl} />
+            <CategoryMenu categories={categories} handleCategoryChange={handleCategoryChange} handleClick={handleClick} handleClose={handleClose} anchorEl={anchorEl} />
             <Typography variant="h6" className={classes.title}>
                 Chuck Norris jokes
       </Typography>

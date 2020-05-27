@@ -4,20 +4,25 @@ import { Menu, MenuItem } from '@material-ui/core';
 export default class CategoryMenu extends Component {
     render() {
         console.log(this.props);
-        const { categories } = this.props;
+        const { handleCategoryChange, handleClose, anchorEl, categories } = this.props;
 
         return (
             <div>
                 <Menu
                     id="simple-menu"
-                    anchorEl={this.props.anchorEl}
+                    anchorEl={anchorEl}
                     keepMounted
-                    open={Boolean(this.props.anchorEl)}
-                    onClose={this.props.handleClose}
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
                 >
                     {
-                        categories.map(c =>
-                            <MenuItem key={c} onClick={this.props.handleClose}>{c}</MenuItem>)
+                        categories.map(c => {
+                            const onClick = () => {
+                                handleCategoryChange(c);
+                                handleClose();
+                            };
+                            return <MenuItem key={c} onClick={onClick}>{c}</MenuItem>
+                        })
                     }
                 </Menu>
             </div>
