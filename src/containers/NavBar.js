@@ -74,15 +74,15 @@ export default function NavBar(props) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-    const { updateJoke, current_category, categories, handleCategoryChange } = props;
+    const { updateJoke, currentCategory, categories, handleCategoryChange } = props;
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const getTitle = () => {
-        if (current_category === 'any') {
+        if (currentCategory === 'any') {
             return "Chuck Norris facts";
         }
-        return "Chuck Norris facts: " + current_category;
+        return "Chuck Norris facts: " + currentCategory;
     };
     const handleDesktopMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);

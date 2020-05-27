@@ -10,8 +10,8 @@ export default class Joke extends Component {
         };
     }
     render() {
-        const { joke, joke_loading } = this.props;
-        if (joke_loading) {
+        const { joke, jokeLoading } = this.props;
+        if (jokeLoading) {
             return <div><CircularProgress /></div>;
         }
 
