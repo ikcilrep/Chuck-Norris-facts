@@ -67,11 +67,12 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }));
+
 function getTitle(currentCategory) {
     if (currentCategory === 'any') {
-        return "Chuck Norris facts";
+        return "Chuck Norris";
     }
-    return "Chuck Norris facts: " + currentCategory;
+    return "Chuck Norris: " + currentCategory;
 };
 
 function getButton(searchFieldValue, updateJokes) {
