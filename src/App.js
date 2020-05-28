@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import Jokes from './components/Jokes'
-import NavBar from './containers/NavBar'
+import Jokes from './components/Jokes';
+import NavBar from './containers/NavBar';
+import JokesPagination from './components/JokesPagination';
 const axios = require('axios');
 
 class App extends Component {
@@ -14,14 +15,16 @@ class App extends Component {
       jokes: [],
       jokesLoading: true,
       searchFieldValue: "",
+      page: 1
     }
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.handleSearchQueryChange = this.handleSearchQueryChange.bind(this);
     this.handleSearchFieldChange = this.handleSearchFieldChange.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
     this.updateJokes = this.updateJokes.bind(this);
   }
   render() {
-    const { searchQuery, currentCategory, categories, jokesLoading, jokes } = this.state;
+    const { page, searchQuery, currentCategory, categories, jokesLoading, jokes } = this.state;
     return (
       <div className="App">
         <NavBar
@@ -33,10 +36,17 @@ class App extends Component {
           handleSearchFieldChange={this.handleSearchFieldChange}
           categories={categories} />
         <center>
-          <Jokes jokes={jokes} jokesLoading={jokesLoading} />
+          <Jokes jokes={jokes} jokesLoading={jokesLoading} page={page} />
         </center>
+        <JokesPagination
+          jokesCount={jokes.length}
+          handlePageChange={this.handlePageChange} />
       </div>
     );
+  }
+
+  handlePageChange(newPage) {
+    this.setState({ page: newPage });
   }
 
   handleSearchFieldChange(newValue) {
@@ -85,7 +95,11 @@ class App extends Component {
       }
       if (jokes) {
         this.setState(
-          { jokes: jokes, jokesLoading: false }
+          {
+            page: 1,
+            jokes: jokes,
+            jokesLoading: false
+          }
         );
       }
     });
