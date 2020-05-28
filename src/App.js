@@ -40,14 +40,13 @@ class App extends Component {
   }
 
   handleSearchFieldChange(newValue) {
-    this.setState({ searchQuery: newValue });
+    this.setState({ searchQuery: newValue, currentCategory: "any" });
   }
 
   handleSearchQueryChange(event) {
     event.persist();
     this.setState({
       searchQuery: event.target.value,
-      currentCategory: "any"
     }, this.updateJokes);
   }
 
