@@ -71,24 +71,25 @@ class App extends Component {
   }
 
   async updateJokes() {
-    this.setState({ jokesLoading: true });
-    const { searchQuery, currentCategory } = this.state;
-    let jokes;
-    if (searchQuery.length >= 3) {
-      const jokesResponse = await axios.get("https://api.chucknorris.io/jokes/search", { params: { query: searchQuery } });
-      jokes = jokesResponse.data.result.map(data => data.value);
-    } else if (currentCategory === "any") {
-      const jokeResponse = await axios.get("https://api.chucknorris.io/jokes/random");
-      jokes = [jokeResponse.data.value];
-    } else {
-      const jokeResponse = await axios.get('https://api.chucknorris.io/jokes/random', { params: { category: currentCategory } });
-      jokes = [jokeResponse.data.value];
-    }
-    if (jokes) {
-      this.setState(
-        { jokes: jokes, jokesLoading: false }
-      );
-    }
+    this.setState({ jokesLoading: true }, async () => {
+      const { searchQuery, currentCategory } = this.state;
+      let jokes;
+      if (searchQuery.length >= 3) {
+        const jokesResponse = await axios.get("https://api.chucknorris.io/jokes/search", { params: { query: searchQuery } });
+        jokes = jokesResponse.data.result.map(data => data.value);
+      } else if (currentCategory === "any") {
+        const jokeResponse = await axios.get("https://api.chucknorris.io/jokes/random");
+        jokes = [jokeResponse.data.value];
+      } else {
+        const jokeResponse = await axios.get('https://api.chucknorris.io/jokes/random', { params: { category: currentCategory } });
+        jokes = [jokeResponse.data.value];
+      }
+      if (jokes) {
+        this.setState(
+          { jokes: jokes, jokesLoading: false }
+        );
+      }
+    });
   }
 
   async componentDidMount() {
