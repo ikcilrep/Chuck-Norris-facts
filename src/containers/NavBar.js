@@ -74,7 +74,7 @@ export default function NavBar(props) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-    const { updateJoke, currentCategory, categories, handleCategoryChange } = props;
+    const { updateJoke, currentCategory, categories, handleSearchQueryChange, handleCategoryChange } = props;
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -141,7 +141,7 @@ export default function NavBar(props) {
                     <Typography className={classes.title} variant="h6" noWrap>
                         {getTitle()}
                     </Typography>
-                    <SearchField classes={classes} />
+                    <SearchField classes={classes} handleSearchQueryChange={handleSearchQueryChange} />
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                     </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Joke from './components/Joke'
+import Jokes from './components/Jokes'
 import NavBar from './containers/NavBar'
 const axios = require('axios');
 
@@ -9,22 +9,35 @@ class App extends Component {
     super(props);
     this.state = {
       currentCategory: "any",
-      currentSearchQuery: "",
+      searchQuery: "",
       categories: ['any'],
-      joke: "",
-      jokeLoading: true,
+      jokes: "",
+      jokesLoading: true,
     }
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
+    this.handleSearchQueryChange = this.handleSearchQueryChange.bind(this);
     this.updateJoke = this.updateJoke.bind(this);
   }
   render() {
-    const { currentCategory, categories, jokeLoading, joke } = this.state;
+    const { currentCategory, categories, jokesLoading, jokes } = this.state;
     return (
       <div className="App">
-        <NavBar currentCategory={currentCategory} updateJoke={this.updateJoke} handleCategoryChange={this.handleCategoryChange} categories={categories} />
-        <Joke joke={joke} jokeLoading={jokeLoading} />
+        <NavBar
+          currentCategory={currentCategory}
+          updateJoke={this.updateJoke} 
+          handleCategoryChange={this.handleCategoryChange} 
+          handleSearchQueryChange={this.handleSearchQueryChange} 
+          categories={categories} />
+        <Jokes jokes={jokes} jokesLoading={jokesLoading} />
       </div>
     );
+  }
+
+  handleSearchQueryChange(event) {
+    event.persist();
+    this.setState({
+      searchQuery: event.target.value 
+    }, this.updateJoke);
   }
 
   handleCategoryChange(newCategory) {
@@ -46,19 +59,21 @@ class App extends Component {
   }
 
   async updateJoke() {
-    const { currentSearchQuery, currentCategory } = this.state;
-    let jokeResponse;
-    if (currentSearchQuery !== "") {
-      jokeResponse = await axios.get("https://api.chucknorris.io/jokes/search", { params: { query: currentSearchQuery } });
+    const { searchQuery, currentCategory } = this.state;
+    let jokes;
+    if (searchQuery.length >= 3) {
+      const jokesResponse = await axios.get("https://api.chucknorris.io/jokes/search", { params: { query: searchQuery } });
+      jokes = jokesResponse.data.result.map(data => data.value);
     } else if (currentCategory === "any") {
-      jokeResponse = await axios.get("https://api.chucknorris.io/jokes/random");
+      const jokeResponse = await axios.get("https://api.chucknorris.io/jokes/random");
+      jokes = [jokeResponse.data.value];
     } else {
-      jokeResponse = await axios.get('https://api.chucknorris.io/jokes/random', { params: { category: currentCategory } });
+      const jokeResponse = await axios.get('https://api.chucknorris.io/jokes/random', { params: { category: currentCategory } });
+      jokes = [jokeResponse.data.value];
     }
-    const joke = await jokeResponse.data.value;
-    if (joke) {
+    if (jokes) {
       this.setState(
-        { joke: joke, jokeLoading: false }
+        { jokes: jokes, jokesLoading: false }
       );
     }
   }
