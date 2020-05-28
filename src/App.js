@@ -13,20 +13,24 @@ class App extends Component {
       categories: ['any'],
       jokes: "",
       jokesLoading: true,
+      searchFieldValue: "",
     }
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.handleSearchQueryChange = this.handleSearchQueryChange.bind(this);
+    this.handleSearchFieldChange = this.handleSearchFieldChange.bind(this);
     this.updateJokes = this.updateJokes.bind(this);
   }
   render() {
-    const { currentCategory, categories, jokesLoading, jokes } = this.state;
+    const { searchQuery, currentCategory, categories, jokesLoading, jokes } = this.state;
     return (
       <div className="App">
         <NavBar
+          searchFieldValue={searchQuery}
           currentCategory={currentCategory}
           updateJokes={this.updateJokes}
           handleCategoryChange={this.handleCategoryChange}
           handleSearchQueryChange={this.handleSearchQueryChange}
+          handleSearchFieldChange={this.handleSearchFieldChange}
           categories={categories} />
         <center>
           <Jokes jokes={jokes} jokesLoading={jokesLoading} />
@@ -35,14 +39,20 @@ class App extends Component {
     );
   }
 
+  handleSearchFieldChange(newValue) {
+    this.setState({ searchQuery: newValue });
+  }
+
   handleSearchQueryChange(event) {
     event.persist();
     this.setState({
-      searchQuery: event.target.value
+      searchQuery: event.target.value,
+      currentCategory: "any"
     }, this.updateJokes);
   }
 
   handleCategoryChange(newCategory) {
+    this.handleSearchFieldChange("");
     this.setState({
       currentCategory: newCategory,
     }, this.updateJokes);

@@ -21,7 +21,6 @@ export default function Jokes(props) {
     return (
         <div className={classes.root}>
             <List component="nav" aria-label="main mailbox folders">
-
                 {jokes.map(joke =>
                     (
                         <ListItem key={joke} >

@@ -2,8 +2,7 @@ import { Toolbar, IconButton, Typography, AppBar, Button } from "@material-ui/co
 import MenuIcon from "@material-ui/icons/Menu";
 import MoreIcon from "@material-ui/icons/More";
 import React from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import CategoryMenu from "../components/CategoryMenu";
+import { fade, makeStyles } from '@material-ui/core/styles'; import CategoryMenu from "../components/CategoryMenu";
 import SearchField from "../components/SearchField";
 
 const useStyles = makeStyles((theme) => ({
@@ -14,8 +13,7 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(2),
     },
     title: {
-        display: 'none',
-        [theme.breakpoints.up('sm')]: {
+        display: 'none', [theme.breakpoints.up('sm')]: {
             display: 'block',
         },
     },
@@ -69,21 +67,43 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }));
+function getTitle(currentCategory) {
+    if (currentCategory === 'any') {
+        return "Chuck Norris facts";
+    }
+    return "Chuck Norris facts: " + currentCategory;
+};
+
+function getButton(searchFieldValue, updateJokes) {
+    const getButtonValue = () => {
+        if (searchFieldValue === "") {
+            return "Next joke"
+        }
+        return "Search"
+    }
+    return (<Button color="inherit" onClick={updateJokes}>
+        {
+            getButtonValue(searchFieldValue)
+        }
+    </Button>
+    )
+
+}
 
 export default function NavBar(props) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-    const { updateJokes, currentCategory, categories, handleSearchQueryChange, handleCategoryChange } = props;
+    const { searchFieldValue,
+        updateJokes,
+        currentCategory,
+        categories,
+        handleSearchFieldChange,
+        handleSearchQueryChange,
+        handleCategoryChange } = props;
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-    const getTitle = () => {
-        if (currentCategory === 'any') {
-            return "Chuck Norris facts";
-        }
-        return "Chuck Norris facts: " + currentCategory;
-    };
     const handleDesktopMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -139,9 +159,13 @@ export default function NavBar(props) {
                         <MenuIcon />
                     </IconButton>
                     <Typography className={classes.title} variant="h6" noWrap>
-                        {getTitle()}
+                        {getTitle(currentCategory)}
                     </Typography>
-                    <SearchField classes={classes} handleSearchQueryChange={handleSearchQueryChange} />
+                    <SearchField
+                        value={searchFieldValue}
+                        classes={classes}
+                        handleSearchQueryChange={handleSearchQueryChange}
+                        handleSearchFieldChange={handleSearchFieldChange} />
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                     </div>
@@ -156,9 +180,9 @@ export default function NavBar(props) {
                             <MoreIcon />
                         </IconButton>
                     </div>
-                    <Button color="inherit" onClick={updateJokes}>
-                        Next joke
-                    </Button>
+                    {
+                        getButton(searchFieldValue, updateJokes, handleSearchQueryChange)
+                    }
                 </Toolbar>
             </AppBar>
             {renderMobileMenu}
