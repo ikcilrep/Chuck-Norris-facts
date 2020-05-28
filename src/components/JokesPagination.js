@@ -2,7 +2,7 @@ import React from 'react';
 import { Pagination } from '@material-ui/lab';
 export const JOKES_ON_PAGE_COUNT = 7;
 export default function JokesPagination(props) {
-    const { handlePageChange, jokesCount } = props;
+    const { page, handlePageChange, jokesCount } = props;
     if (jokesCount <= JOKES_ON_PAGE_COUNT) {
         return <div></div>
     }
@@ -12,6 +12,7 @@ export default function JokesPagination(props) {
         <Pagination 
             color="primary" 
             count={pagesCount} 
-            onChange={(e, page) => handlePageChange(page)} />
+            onChange={(e, page) => handlePageChange(page)}
+            page={page} />
     </div>)
 }

@@ -39,6 +39,7 @@ class App extends Component {
           <Jokes jokes={jokes} jokesLoading={jokesLoading} page={page} />
         </center>
         <JokesPagination
+          page={page}
           jokesCount={jokes.length}
           handlePageChange={this.handlePageChange} />
       </div>
@@ -57,10 +58,11 @@ class App extends Component {
     event.persist();
     let searchQuery = event.target.value;
     if (searchQuery !== "" && searchQuery.length < 3) {
-      searchQuery = ` ${searchQuery} `; 
+      searchQuery = ` ${searchQuery} `;
     }
 
     this.setState({
+      page: 1,
       searchQuery: searchQuery,
       currentCategory: "any"
     }, this.updateJokes);
@@ -70,6 +72,7 @@ class App extends Component {
     this.handleSearchFieldChange("");
     this.setState({
       currentCategory: newCategory,
+      page: 1,
     }, this.updateJokes);
   }
 
