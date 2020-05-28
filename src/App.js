@@ -11,7 +11,7 @@ class App extends Component {
       currentCategory: "any",
       searchQuery: "",
       categories: ['any'],
-      jokes: "",
+      jokes: [],
       jokesLoading: true,
       searchFieldValue: "",
     }
