@@ -1,37 +1,17 @@
-import React, { Component } from "react"
+import React from "react"
 import { CircularProgress } from '@material-ui/core';
 
-export default class Joke extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: {},
-            loading: true
-        };
-    }
-    render() {
-        const { joke, jokeLoading } = this.props;
-        if (jokeLoading) {
-            return <div><CircularProgress /></div>;
-        }
-
-        return (
-            <div>
-                <h1>
-                    {joke}
-                </h1>
-            </div>
-        );
+export default function Joke(props)  {
+    const { joke, jokeLoading } = props;
+    if (jokeLoading) {
+        return <div><CircularProgress /></div>;
     }
 
-    async componentDidMount() {
-        const data = await fetch("https://api.chucknorris.io/jokes/random");
-        const dataJSON = await data.json();
-
-        if (dataJSON) {
-            this.setState(
-                { data: dataJSON, loading: false }
-            )
-        }
-    }
+    return (
+        <div>
+            <h1>
+                {joke}
+            </h1>
+        </div>
+    );
 }
