@@ -24,7 +24,7 @@ export default function Jokes(props) {
 
                 {jokes.map(joke =>
                     (
-                        <ListItem>
+                        <ListItem key={joke} >
                             <ListItemText primary={joke} />
                         </ListItem>)
                 )}

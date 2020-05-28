@@ -16,7 +16,7 @@ class App extends Component {
     }
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.handleSearchQueryChange = this.handleSearchQueryChange.bind(this);
-    this.updateJoke = this.updateJoke.bind(this);
+    this.updateJokes = this.updateJokes.bind(this);
   }
   render() {
     const { currentCategory, categories, jokesLoading, jokes } = this.state;
@@ -24,11 +24,13 @@ class App extends Component {
       <div className="App">
         <NavBar
           currentCategory={currentCategory}
-          updateJoke={this.updateJoke} 
-          handleCategoryChange={this.handleCategoryChange} 
-          handleSearchQueryChange={this.handleSearchQueryChange} 
+          updateJokes={this.updateJokes}
+          handleCategoryChange={this.handleCategoryChange}
+          handleSearchQueryChange={this.handleSearchQueryChange}
           categories={categories} />
-        <Jokes jokes={jokes} jokesLoading={jokesLoading} />
+        <center>
+          <Jokes jokes={jokes} jokesLoading={jokesLoading} />
+        </center>
       </div>
     );
   }
@@ -36,14 +38,14 @@ class App extends Component {
   handleSearchQueryChange(event) {
     event.persist();
     this.setState({
-      searchQuery: event.target.value 
-    }, this.updateJoke);
+      searchQuery: event.target.value
+    }, this.updateJokes);
   }
 
   handleCategoryChange(newCategory) {
     this.setState({
       currentCategory: newCategory,
-    }, this.updateJoke);
+    }, this.updateJokes);
   }
 
   async updateCategories() {
@@ -58,7 +60,8 @@ class App extends Component {
 
   }
 
-  async updateJoke() {
+  async updateJokes() {
+    this.setState({ jokesLoading: true });
     const { searchQuery, currentCategory } = this.state;
     let jokes;
     if (searchQuery.length >= 3) {
@@ -80,7 +83,7 @@ class App extends Component {
 
   async componentDidMount() {
     await this.updateCategories();
-    await this.updateJoke();
+    await this.updateJokes();
   }
 }
 

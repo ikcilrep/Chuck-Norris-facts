@@ -74,7 +74,7 @@ export default function NavBar(props) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-    const { updateJoke, currentCategory, categories, handleSearchQueryChange, handleCategoryChange } = props;
+    const { updateJokes, currentCategory, categories, handleSearchQueryChange, handleCategoryChange } = props;
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -156,7 +156,7 @@ export default function NavBar(props) {
                             <MoreIcon />
                         </IconButton>
                     </div>
-                    <Button color="inherit" onClick={updateJoke}>
+                    <Button color="inherit" onClick={updateJokes}>
                         Next joke
                     </Button>
                 </Toolbar>
